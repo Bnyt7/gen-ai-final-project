@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Council Member 1
+  ollama-1:
+    image: ollama/ollama:latest
+    container_name: llm-council-ollama-1
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-1-data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - council-network
+
+  # Council Member 2 (uncomment for distributed setup)
+  # ollama-2:
+  #   image: ollama/ollama:latest
+  #   container_name: llm-council-ollama-2
+  #   ports:
+  #     - "11435:11434"
+  #   volumes:
+  #     - ollama-2-data:/root/.ollama
+  #   restart: unless-stopped
+  #   networks:
+  #     - council-network
+
+  # Council Member 3 (uncomment for distributed setup)
+  # ollama-3:
+  #   image: ollama/ollama:latest
+  #   container_name: llm-council-ollama-3
+  #   ports:
+  #     - "11436:11434"
+  #   volumes:
+  #     - ollama-3-data:/root/.ollama
+  #   restart: unless-stopped
+  #   networks:
+  #     - council-network
+
+  # Chairman (uncomment for distributed setup)
+  # ollama-chairman:
+  #   image: ollama/ollama:latest
+  #   container_name: llm-council-ollama-chairman
+  #   ports:
+  #     - "11437:11434"
+  #   volumes:
+  #     - ollama-chairman-data:/root/.ollama
+  #   restart: unless-stopped
+  #   networks:
+  #     - council-network
+
+volumes:
+  ollama-1-data:
+  # ollama-2-data:
+  # ollama-3-data:
+  # ollama-chairman-data:
+
+networks:
+  council-network:
+    driver: bridge
