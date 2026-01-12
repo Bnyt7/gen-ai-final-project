@@ -33,7 +33,7 @@ API_HOST = os.getenv("API_HOST", "0.0.0.0")
 API_PORT = int(os.getenv("API_PORT", "8000"))
 
 # Timeout settings (in seconds)
-REQUEST_TIMEOUT = 900
+TIMEOUTREQUEST_ = 900
 
 # Storage
 CONVERSATIONS_DIR = "data/conversations"

@@ -184,9 +184,11 @@ And one chairman :
 
 I have chosen the 3 council members as a compromise between performance (mostly speed), CPU/GPU usage and quality. smollm2:135m was used at the beginning as a cheap test and didn't meet the expectations. There was some hesitation between qwen3:4b, qwen3:1.7b and a previous version qwen2.5:3b. qwen3:4b takes significantly more time to process. While qwen3:4b is apparently one of the best, it's also the slowest. Therefore, it's used as the chairman as the best orchestrator.
 
+The application should be usable on student laptops, who only have an integrated GPU. The processing time depends on the prompt and the PC configuration, with a 15 min timeout.
 
-- The front-end was made with React and Vite and interacts with the back-end with HTTP and Websocket requests.
-- THe back-end is based on  FastAPI, Uvicorn, httpx, Pydantic. It will interact with each model by using the Ollama API.
+The front-end was made with React and Vite and interacts with the back-end with HTTP and Websocket requests.
+
+The back-end is based on  FastAPI, Uvicorn, httpx, Pydantic. It will interact with each model by using the Ollama API.
 
 ### Stage 1: First Opinions
 - The user submits a query.
