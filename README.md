@@ -112,6 +112,7 @@ Each team must submit one single submission (in the Final Project Submission fol
 - Documentation: Clear setup guide, architecture, explanation
 - Teamwork & Demo: Clear roles, smooth live presentation
 - 📌 Final evaluation will take place during the last TD session
+
 ## Optional Enhancement Ideas (Bonus)
 Any additional frontend improvement beyond the base implementation will be considered a plus. Examples include, but are not limited to:
 
@@ -153,20 +154,72 @@ If Generative AI usage is detected and not disclosed the project may receive a s
 Transparency is mandatory. Using Generative AI responsibly and declaring its use will not negatively impact your evaluation.
 
 # LLM Council  : Local Implementation
-## Disclaimer (Generative AI Usage Statement)
+
+## Disclaimer
+(Generative AI Usage Statement)
 The application was directly inspired by Andrej Karpathy's project. Generative AI has been used for code refactoring, some debugging and design. The code was then reviewed by me. Some scripts were generated to make the setup easier : ``start.bat`` and ``start.sh``.
 
 The prompts in ``council.py`` and this documentation were written by me. The main objective for them was to get cost-efficient (not wait an hour or more for results) and the most accurate answers possible.
 
 I have also fact-checked each model's results to limit errors and hallucinations. For example, famous novels are easy to verify. Despite that, the outputs can still contain errors. This is the main drawback of small models.
 
+This project was made for educational purposes.
+
 ## Description
-The application was directly inspired by Andrej Karpathy's project. Instead of using Openrouter, it uses Ollama. All LLMs run locally.
+This is a new implementation of the LLM Council project. Instead of using Openrouter, it uses Ollama. All LLMs run locally.
+The user will use 4 different models on their own PC.
 
 1. The user submits a query
 2. Each LLM in the council generates an answer independently
 3. All responses are displayed in a tabbed interface for individual inspection
 4. The chairman's synthesized answer on top
+
+There are 3 council members : 
+- llama3.2:3b
+- gemma3:1b
+- qwen3:1.7b
+
+And one chairman : 
+- qwen3:4b
+
+I have chosen the 3 council members as a compromise between performance (mostly speed), CPU/GPU usage and quality. smollm2:135m was used at the beginning as a cheap test and didn't meet the expectations. There was some hesitation between qwen3:4b, qwen3:1.7b and a previous version qwen2.5:3b. qwen3:4b takes significantly more time to process. While qwen3:4b is apparently one of the best, it's also the slowest. Therefore, it's used as the chairman as the best orchestrator.
+
+
+- The front-end was made with React and Vite and interacts with the back-end with HTTP and Websocket requests.
+- THe back-end is based on  FastAPI, Uvicorn, httpx, Pydantic. It will interact with each model by using the Ollama API.
+
+### Stage 1: First Opinions
+- The user submits a query.
+- Each LLM in the council generates an answer independently in sequential order.
+
+### Stage 2: Review & Ranking
+- Each LLM is shown the responses from the other LLMs. Each response must be rated out of 10 with a brief explanation.
+- Model identities are anonymized to avoid bias.
+- Each LLM ranks the responses based on: accuracy, insight and consistency
+### Stage 3: Chairman Final Answer
+The Chairman LLM:
+- Receives all original responses
+- Receives all review rankings
+- Then synthesizes everything into a single final response presented to the user.
+
+If there are any issues (timeout, request error), an error message will be shown, mentioning the step and the model where it was stuck. 
+
+Features : 
+
+- Local LLMs
+- Simple UI
+- Side-by-side output comparison
+- Native dark mode
+- Stored query & output as json
+- Ranking results
+- Progressive stage workflow
+
+Prompt examples :
+- "Who is Sherlock Holmes ?"
+- "What are Agatha Christie's most famous books ?"
+- "Give me the greatest science-fiction novels of all time"
+- "What are Jules Verne's most famous works ? Give me a top 5"
+- "What are Asimov's three laws of robotics?"
 
 ## Requirements
 [Download Ollama](https://ollama.com/download)
@@ -213,30 +266,7 @@ npm run dev
 - **Frontend UI**: http://localhost:5173
 - **Backend API**: http://localhost:8000
 
-There are 3 council members : 
-- llama3.2:3b
-- gemma3:1b
-- qwen3:1.7b
-
-And one chairman : 
-- qwen3:4b
-
-I have chosen the 3 council members as a compromise between performance (mostly speed), CPU/GPU usage and quality. smollm2:135m was used at the beginning as a cheap test and didn't meet the expectations. There was some hesitation between qwen3:4b, qwen3:1.7b and a previous version qwen2.5:3b. qwen3:4b takes significantly more time to process. While qwen3:4b is apparently one of the best, it's also the slowest. Therefore, it's used as the chairman.
 
 
 
 
-Prompt examples :
-- "Who is Sherlock Holmes ?"
-- "What are Agatha Christie's most famous books ?"
-- "Give me the greatest science-fiction novels of all time"
-- "What are Jules Verne's most famous works ? Give me a top 5"
-
-Features : 
-
-- Expandable text box
-- Side-by-side output comparison
-- Native dark mode
-- Stored query & output as json
-- Ranking results
-- Progressive stage workflow
