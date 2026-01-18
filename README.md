@@ -155,9 +155,12 @@ Transparency is mandatory. Using Generative AI responsibly and declaring its use
 
 # LLM Council  : Local Implementation
 
+- TD Group: CDOF3
+- Team member : Benoit H.
+
 ## Disclaimer
 (Generative AI Usage Statement)
-The application was directly inspired by Andrej Karpathy's project. Generative AI has been used for code refactoring, some debugging and design. The code was then reviewed by me. Some scripts were generated to make the setup easier : ``start.bat`` and ``start.sh``.
+The application was directly inspired by Andrej Karpathy's project. Github Copilot (Claude Sonnet 4.5) has been used for code refactoring, some debugging and design. The code was then reviewed by me. Some scripts were generated to make the setup easier : ``start.bat`` and ``start.sh``.
 
 The prompts in ``council.py`` and this documentation were written by me. The main objective for them was to get cost-efficient (not wait an hour or more for results) and the most accurate answers possible.
 
